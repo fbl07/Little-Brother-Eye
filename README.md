@@ -1,4 +1,4 @@
-# Little-Brother-Eye
+# Little Brother Eye
 A website used by the Injustice 2 community to keep track of the events currently happening in game
 
 **NOTE** : this app requires a SQL Server database to work, you'll need to update the web.config file in the web app project and the app.config file in the data access project to replace the placeholder by your actual connection string. Let me know if you have problems with this.
