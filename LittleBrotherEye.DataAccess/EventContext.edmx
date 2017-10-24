@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LittleBrotherEyeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APIKeys">
+          <Key>
+            <PropertyRef Name="APIKey" />
+          </Key>
+          <Property Name="APIKey" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email" Type="varchar(max)" Nullable="false" />
+          <Property Name="RequestCount" Type="int" Nullable="false" />
+          <Property Name="LastRequestDt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BotConfig">
+          <Key>
+            <PropertyRef Name="ConfigId" />
+          </Key>
+          <Property Name="ConfigId" Type="int" Nullable="false" />
+          <Property Name="AccessToken" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Expire" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BotPost">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateTime" Type="datetime" Nullable="false" />
+          <Property Name="RedditPostIdentifier" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CodeTable">
+          <Key>
+            <PropertyRef Name="CodeTableId" />
+          </Key>
+          <Property Name="CodeTableId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="CodeValue">
+          <Key>
+            <PropertyRef Name="CodeValue" />
+          </Key>
+          <Property Name="CodeTableId" Type="int" Nullable="false" />
+          <Property Name="CodeValue" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EditHistory">
+          <Key>
+            <PropertyRef Name="HistoryId" />
+          </Key>
+          <Property Name="HistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="EditDate" Type="datetime" Nullable="false" />
+          <Property Name="NewName" Type="varchar" MaxLength="500" />
+          <Property Name="IpAdress" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusCode" Type="int" />
+          <Property Name="Request" Type="varchar" MaxLength="1000" />
+          <Property Name="Text" Type="varchar" MaxLength="1000" />
+          <Property Name="StackTrace" Type="varchar(max)" />
+          <Property Name="TimeOfError" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" />
+          <Property Name="Character_Cd" Type="int" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="RewardType_Cd" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CodeValue_CodeTable">
+          <End Role="CodeTable" Type="Self.CodeTable" Multiplicity="1" />
+          <End Role="CodeValue" Type="Self.CodeValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeTable">
+              <PropertyRef Name="CodeTableId" />
+            </Principal>
+            <Dependent Role="CodeValue">
+              <PropertyRef Name="CodeTableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EditHistory_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="EditHistory" Type="Self.EditHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="EditHistory">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Character_Cd">
+          <End Role="CodeValue" Type="Self.CodeValue" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeValue">
+              <PropertyRef Name="CodeValue" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="Character_Cd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_RewardType_Cd">
+          <End Role="CodeValue" Type="Self.CodeValue" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeValue">
+              <PropertyRef Name="CodeValue" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="RewardType_Cd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LittleBrotherEyeModelStoreContainer">
+          <EntitySet Name="APIKeys" EntityType="Self.APIKeys" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BotConfig" EntityType="Self.BotConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BotPost" EntityType="Self.BotPost" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CodeTable" EntityType="Self.CodeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CodeValue" EntityType="Self.CodeValue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EditHistory" EntityType="Self.EditHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CodeValue_CodeTable" Association="Self.FK_CodeValue_CodeTable">
+            <End Role="CodeTable" EntitySet="CodeTable" />
+            <End Role="CodeValue" EntitySet="CodeValue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EditHistory_Event" Association="Self.FK_EditHistory_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="EditHistory" EntitySet="EditHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Character_Cd" Association="Self.FK_Event_Character_Cd">
+            <End Role="CodeValue" EntitySet="CodeValue" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_RewardType_Cd" Association="Self.FK_Event_RewardType_Cd">
+            <End Role="CodeValue" EntitySet="CodeValue" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LittleBrotherEyeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BotConfig">
+          <Key>
+            <PropertyRef Name="ConfigId" />
+          </Key>
+          <Property Name="ConfigId" Type="Int32" Nullable="false" />
+          <Property Name="AccessToken" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Expire" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="BotPost">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RedditPostIdentifier" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CodeTable">
+          <Key>
+            <PropertyRef Name="CodeTableId" />
+          </Key>
+          <Property Name="CodeTableId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CodeValues" Relationship="Self.FK_CodeValue_CodeTable" FromRole="CodeTable" ToRole="CodeValue" />
+        </EntityType>
+        <EntityType Name="CodeValue">
+          <Key>
+            <PropertyRef Name="CodeValue1" />
+          </Key>
+          <Property Name="CodeTableId" Type="Int32" Nullable="false" />
+          <Property Name="CodeValue1" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CodeTable" Relationship="Self.FK_CodeValue_CodeTable" FromRole="CodeValue" ToRole="CodeTable" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Event_Character_Cd" FromRole="CodeValue" ToRole="Event" />
+          <NavigationProperty Name="Events1" Relationship="Self.FK_Event_RewardType_Cd" FromRole="CodeValue" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusCode" Type="Int32" />
+          <Property Name="Request" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="StackTrace" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TimeOfError" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Character_Cd" Type="Int32" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="RewardType_Cd" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Character" Relationship="Self.FK_Event_Character_Cd" FromRole="Event" ToRole="CodeValue" />
+          <NavigationProperty Name="RewardType" Relationship="Self.FK_Event_RewardType_Cd" FromRole="Event" ToRole="CodeValue" />
+          <NavigationProperty Name="EditHistories" Relationship="LittleBrotherEyeModel.FK_EditHistory_Event" FromRole="Event" ToRole="EditHistory" />
+        </EntityType>
+        <Association Name="FK_CodeValue_CodeTable">
+          <End Role="CodeTable" Type="Self.CodeTable" Multiplicity="1" />
+          <End Role="CodeValue" Type="Self.CodeValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeTable">
+              <PropertyRef Name="CodeTableId" />
+            </Principal>
+            <Dependent Role="CodeValue">
+              <PropertyRef Name="CodeTableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Character_Cd">
+          <End Role="CodeValue" Type="Self.CodeValue" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeValue">
+              <PropertyRef Name="CodeValue1" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="Character_Cd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_RewardType_Cd">
+          <End Role="CodeValue" Type="Self.CodeValue" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeValue">
+              <PropertyRef Name="CodeValue1" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="RewardType_Cd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LittleBrotherEyeEntities" annotation:LazyLoadingEnabled="true" a:TypeAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <EntitySet Name="BotConfigs" EntityType="Self.BotConfig" />
+          <EntitySet Name="BotPosts" EntityType="Self.BotPost" />
+          <EntitySet Name="CodeTables" EntityType="Self.CodeTable" />
+          <EntitySet Name="CodeValues" EntityType="Self.CodeValue" />
+          <EntitySet Name="ErrorLogs" EntityType="Self.ErrorLog" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <AssociationSet Name="FK_CodeValue_CodeTable" Association="Self.FK_CodeValue_CodeTable">
+            <End Role="CodeTable" EntitySet="CodeTables" />
+            <End Role="CodeValue" EntitySet="CodeValues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Character_Cd" Association="Self.FK_Event_Character_Cd">
+            <End Role="CodeValue" EntitySet="CodeValues" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_RewardType_Cd" Association="Self.FK_Event_RewardType_Cd">
+            <End Role="CodeValue" EntitySet="CodeValues" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <EntitySet Name="EditHistories" EntityType="LittleBrotherEyeModel.EditHistory" />
+          <AssociationSet Name="FK_EditHistory_Event" Association="LittleBrotherEyeModel.FK_EditHistory_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EditHistory" EntitySet="EditHistories" />
+          </AssociationSet>
+          <EntitySet Name="APIKeys" EntityType="LittleBrotherEyeModel.APIKey" />
+        </EntityContainer>
+        <EntityType Name="EditHistory">
+          <Key>
+            <PropertyRef Name="HistoryId" />
+          </Key>
+          <Property Name="HistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="EditDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NewName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IpAdress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event" Relationship="LittleBrotherEyeModel.FK_EditHistory_Event" FromRole="EditHistory" ToRole="Event" />
+        </EntityType>
+        <Association Name="FK_EditHistory_Event">
+          <End Type="LittleBrotherEyeModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="LittleBrotherEyeModel.EditHistory" Role="EditHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="EditHistory">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="APIKey">
+          <Key>
+            <PropertyRef Name="APIKey1" />
+          </Key>
+          <Property Name="APIKey1" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RequestCount" Type="Int32" Nullable="false" />
+          <Property Name="LastRequestDt" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LittleBrotherEyeModelStoreContainer" CdmEntityContainer="LittleBrotherEyeEntities">
+          <EntitySetMapping Name="BotConfigs">
+            <EntityTypeMapping TypeName="LittleBrotherEyeModel.BotConfig">
+              <MappingFragment StoreEntitySet="BotConfig">
+                <ScalarProperty Name="ConfigId" ColumnName="ConfigId" />
+                <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
+                <ScalarProperty Name="Expire" ColumnName="Expire" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BotPosts">
+            <EntityTypeMapping TypeName="LittleBrotherEyeModel.BotPost">
+              <MappingFragment StoreEntitySet="BotPost">
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LastUpdateTime" ColumnName="LastUpdateTime" />
+                <ScalarProperty Name="RedditPostIdentifier" ColumnName="RedditPostIdentifier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodeTables">
+            <EntityTypeMapping TypeName="LittleBrotherEyeModel.CodeTable">
+              <MappingFragment StoreEntitySet="CodeTable">
+                <ScalarProperty Name="CodeTableId" ColumnName="CodeTableId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodeValues">
+            <EntityTypeMapping TypeName="LittleBrotherEyeModel.CodeValue">
+              <MappingFragment StoreEntitySet="CodeValue">
+                <ScalarProperty Name="CodeTableId" ColumnName="CodeTableId" />
+                <ScalarProperty Name="CodeValue1" ColumnName="CodeValue" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ErrorLogs">
+            <EntityTypeMapping TypeName="LittleBrotherEyeModel.ErrorLog">
+              <MappingFragment StoreEntitySet="ErrorLog">
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="Request" ColumnName="Request" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+                <ScalarProperty Name="TimeOfError" ColumnName="TimeOfError" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="LittleBrotherEyeModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Character_Cd" ColumnName="Character_Cd" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="RewardType_Cd" ColumnName="RewardType_Cd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EditHistories">
+            <EntityTypeMapping TypeName="LittleBrotherEyeModel.EditHistory">
+              <MappingFragment StoreEntitySet="EditHistory">
+                <ScalarProperty Name="IpAdress" ColumnName="IpAdress" />
+                <ScalarProperty Name="NewName" ColumnName="NewName" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APIKeys">
+            <EntityTypeMapping TypeName="LittleBrotherEyeModel.APIKey">
+              <MappingFragment StoreEntitySet="APIKeys">
+                <ScalarProperty Name="LastRequestDt" ColumnName="LastRequestDt" />
+                <ScalarProperty Name="RequestCount" ColumnName="RequestCount" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="APIKey1" ColumnName="APIKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

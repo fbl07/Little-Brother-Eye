@@ -1,0 +1,43 @@
+﻿@model LittleBrotherEye.Models.EventList
+
+@if (Model.Events.Count > 0)
+{
+<thead>
+    <tr>
+        <th>Name</th>
+        <th>Character</th>
+        <th>End Time</th>
+        <th>Ends In</th>
+        <th>Reward Type</th>
+        <th></th>
+        @if (ViewBag.EnableModMode)
+        {
+            <th></th>
+        }
+    </tr>
+</thead>
+<tbody>
+    @foreach (var oEvent in Model.Events)
+    {
+        <tr>
+            <td>@oEvent.Name</td>
+            <td>@(oEvent.Character_Cd.HasValue ? Model.Characters[oEvent.Character_Cd.Value] : "None")</td>
+            <td>@(oEvent.EndTime.HasValue ? oEvent.EndTime.Value.ToString("MM/dd/yyyy hh:mm tt") + " GMT" : "End Date Not Specified")</td>
+            <td>@oEvent.DisplayForTimeToEnd</td>
+            <td>@Model.RewardTypes[oEvent.RewardType_Cd]</td>
+            <td>@Html.ActionLink("Edit", "Edit", new { EventId = oEvent.Id }, new { @class = "btn btn-primary" })</td>
+
+            @if (ViewBag.EnableModMode)
+            {
+                <td><button type="button" class="remove btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-event-id="@oEvent.Id">Remove</button></td>
+            }
+        </tr>
+    }
+</tbody>
+}
+else
+{
+    <tbody>
+        <tr><td>No events found</td></tr>
+    </tbody>
+}

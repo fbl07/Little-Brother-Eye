@@ -1,0 +1,38 @@
+﻿@model IEnumerable<LittleBrotherEye.DataAccess.ErrorLog>
+
+@{
+    ViewBag.Title = "Error List";
+}
+
+<h2 class="title">Error List</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Log Id</th>
+                    <th>Status Code</th>
+                    <th>Request</th>
+                    <th>Text</th>
+                    <th>Time of Error</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var log in Model)
+                {
+                    <tr>
+                        <td>@log.LogId</td>
+                        <td>@log.StatusCode</td>
+                        <td>@log.Request</td>
+                        <td>@log.Text</td>
+                        <td>@(log.TimeOfError.HasValue ? log.TimeOfError.Value.ToString("G") : "No Time")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer"></div>
+</div>

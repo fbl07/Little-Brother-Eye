@@ -1,0 +1,69 @@
+﻿@model LittleBrotherEye.Models.EventModel
+
+@{
+    ViewBag.Title = Model.Id.HasValue ? "Edit Event" : "New Event";
+}
+
+<h2 class="title">@ViewBag.Title</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1 class="panel-title">Event Information</h1>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-9">
+                <form class="form-horizontal" method="post">
+
+                    @Html.HiddenFor(x => x.Id)
+
+                    <span style="color:red;">
+                        @Html.ValidationSummary()
+                    </span>
+
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Character</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownListFor(x => x.Character_Cd, new SelectList(Model.Characters, "Key", "Value", Model.Character_Cd), "None", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Time To End</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                @Html.TextBoxFor(x => x.TimeToEndHours, new { @class = "form-control" })
+                                <span class="input-group-addon">Hours</span>
+                                @Html.TextBoxFor(x => x.TimeToEndMinutes, new { @class = "form-control" })
+                                <span class="input-group-addon">Minutes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Reward Type</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownListFor(x => x.RewardType_Cd, new SelectList(Model.RewardTypes, "Key", "Value", Model.RewardType_Cd), new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@section Scripts
+    {
+        <script src="@Url.Content("~/Scripts/Custom/InitialiseTimePickers.js")"></script>
+    }*@

@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="1e514a0a-163d-4644-b934-7b7ff705d43d" ChangeDateTime="06/02/2017 22:15:13">
+    <Property Name="ElementName" Value="[dbo].[Event].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Event]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EventId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="af073dd6-b293-4276-b1dc-d13e0e071cfb" ChangeDateTime="06/02/2017 22:16:30">
+    <Property Name="ElementName" Value="[dbo].[Event].[Character_CD]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Event]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Character_C" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d1729db2-5d45-4c79-b96d-a5625067b485" ChangeDateTime="06/02/2017 22:16:32">
+    <Property Name="ElementName" Value="[dbo].[Event].[Character_C]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Event]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Character_Cd" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a1a19381-6218-4a6e-8ed8-ad0e36317e99" ChangeDateTime="06/02/2017 22:17:38">
+    <Property Name="ElementName" Value="[dbo].[CodeTable].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CodeTable]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CodeTableId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="140452e9-3b72-47d1-8e31-72232fb2b173" ChangeDateTime="06/02/2017 22:19:09">
+    <Property Name="ElementName" Value="[dbo].[CodeValue].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CodeValue]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CodeValue" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="834c8bf2-c925-4302-82a3-f5c1b76a05e7" ChangeDateTime="06/02/2017 22:23:49">
+    <Property Name="ElementName" Value="[dbo].[FK_Event_Reward_Cd]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Event]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Event_RewardType_Cd]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3cd3b5a2-33c2-43d7-a08a-dbbc6f331a40" ChangeDateTime="06/04/2017 19:01:07">
+    <Property Name="ElementName" Value="[dbo].[ErrorLog].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ErrorLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LoId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="452b7939-9daa-4970-aadf-5b33c4896432" ChangeDateTime="06/04/2017 19:01:11">
+    <Property Name="ElementName" Value="[dbo].[ErrorLog].[LoId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ErrorLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LogId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f6852c27-0562-4dec-84b2-7907c31afd29" ChangeDateTime="06/08/2017 00:46:52">
+    <Property Name="ElementName" Value="[dbo].[BotPost].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[BotPost]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PostId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="be7f010a-957e-4e50-bb4e-9100470ab9d8" ChangeDateTime="06/08/2017 03:07:12">
+    <Property Name="ElementName" Value="[dbo].[BotConfig].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[BotConfig]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AccessToken" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8f35c582-3eaf-4d06-bbe1-2b62fa6ceae9" ChangeDateTime="06/10/2017 02:24:24">
+    <Property Name="ElementName" Value="[dbo].[EditHistory].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[EditHistory]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="HistoryId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="89b9ada7-a83b-4023-b8b8-43c650eeabdf" ChangeDateTime="07/08/2017 00:35:30">
+    <Property Name="ElementName" Value="[dbo].[APIKeys].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[APIKeys]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="APIKey" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="01be6942-29d0-4c56-8f94-aa2be2deb751" ChangeDateTime="07/08/2017 00:38:08">
+    <Property Name="ElementName" Value="[dbo].[APIKeys].[LastRequest]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[APIKeys]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LastRequestDt" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a27c93bd-0d02-4ae0-851a-876f04304444" ChangeDateTime="07/08/2017 00:46:08">
+    <Property Name="ElementName" Value="[dbo].[APIKeys].[email]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[APIKeys]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Email" />
+  </Operation>
+</Operations>

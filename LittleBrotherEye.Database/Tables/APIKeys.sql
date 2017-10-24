@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[APIKeys]
+(
+	[APIKey] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Email] VARCHAR(900) NOT NULL, 
+    [RequestCount] INT NOT NULL, 
+    [LastRequestDt] DATETIME NULL
+)
+GO
+
+CREATE UNIQUE INDEX API_Key_Email on APIKeys (Email)
